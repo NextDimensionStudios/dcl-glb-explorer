@@ -23,10 +23,15 @@ export class GlbExplorer extends Entity {
   constructor(transform: Transform) {
     super();
 
+    let base = new Entity();
+    base.addComponent(new GLTFShape('models/Base.glb'));
+    base.addComponent(transform);
+    engine.addEntity(base);
+
     this.rotator = new Entity();
     this.rotator.addComponent(
       new Transform({
-        position: transform.position.add(new Vector3(-2, 4, 0)),
+        position: transform.position.add(new Vector3(0, 5.5, 0)),
         scale: transform.scale,
         rotation: transform.rotation
       })
@@ -52,9 +57,9 @@ export class GlbExplorer extends Entity {
     controls.addComponent(new GLTFShape('models/GlbExplorerButtons.glb'));
     controls.addComponent(
       new Transform({
-        position: new Vector3(0, 1.5, 8),
+        position: transform.position.add(new Vector3(0, 1.5, -6)),
         scale: new Vector3(1, 1, 1),
-        rotation: Quaternion.Euler(45, 90, 0)
+        rotation: Quaternion.Euler(45, 0, 0)
       })
     );
     engine.addEntity(controls);
@@ -67,9 +72,9 @@ export class GlbExplorer extends Entity {
     this.currentTitle.addComponent(initialTitle);
     this.currentTitle.addComponent(
       new Transform({
-        position: new Vector3(2.75, 8, 3),
+        position: transform.position.add(new Vector3(0, 1, -6)),
         scale: new Vector3(1, 1, 1),
-        rotation: Quaternion.Euler(45, 90, 0)
+        rotation: Quaternion.Euler(45, 0, 0)
       })
     );
     engine.addEntity(this.currentTitle);
@@ -77,7 +82,7 @@ export class GlbExplorer extends Entity {
     this.rotationSfx = new Sound(new AudioClip('sounds/GlbRotateFX.wav'));
     this.rotationSfx.getComponent(AudioSource).loop = true;
     this.rotationSfx.getComponent(AudioSource).playing = false;
-    this.rotationSfx.getComponent(AudioSource).volume = 0.6;
+    this.rotationSfx.getComponent(AudioSource).volume = 1.0;
 
     this.nextSfx = new Sound(new AudioClip('sounds/GlbNext.wav'));
     this.nextSfx.getComponent(AudioSource).loop = false;
@@ -160,7 +165,7 @@ export class GlbExplorer extends Entity {
         }
       )
     );
-    this.rotator.getComponent(Transform).rotation = Quaternion.Euler(0, -90, 0);
+    this.rotator.getComponent(Transform).rotation = Quaternion.Euler(0, 0, 0);
 
     const title = this.currentTitle.getComponent(TextShape);
     title.value = interactiveGlbs[this.currentGlbId].title;
@@ -188,7 +193,7 @@ export class GlbExplorer extends Entity {
         }
       )
     );
-    this.rotator.getComponent(Transform).rotation = Quaternion.Euler(0, -90, 0);
+    this.rotator.getComponent(Transform).rotation = Quaternion.Euler(0, 0, 0);
 
     const title = this.currentTitle.getComponent(TextShape);
     title.value = interactiveGlbs[this.currentGlbId].title;

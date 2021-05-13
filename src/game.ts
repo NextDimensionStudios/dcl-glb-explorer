@@ -2,9 +2,9 @@ import { GlbExplorer } from 'src/glb-explorer/glb-explorer';
 
 const glbExplorer = new GlbExplorer(
   new Transform({
-    position: new Vector3(8, 1.5, 8),
+    position: new Vector3(8, 0, 8),
     scale: new Vector3(1, 1, 1),
-    rotation: Quaternion.Euler(0, -90, 0)
+    rotation: Quaternion.Euler(0, 0, 0)
   })
 );
 

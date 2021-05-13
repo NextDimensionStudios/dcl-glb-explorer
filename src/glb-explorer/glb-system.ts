@@ -36,9 +36,11 @@ export class GlbRotatorSystem implements ISystem {
           break;
         }
         case SpinDirection.y: {
-          transform.rotation = Quaternion.Euler(0, 0, dt * 10 * speed).multiply(
-            transform.rotation
-          );
+          transform.rotation = Quaternion.Euler(
+            -dt * 10 * speed,
+            0,
+            0
+          ).multiply(transform.rotation);
           break;
         }
       }

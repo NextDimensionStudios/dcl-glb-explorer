@@ -10,7 +10,7 @@ export const interactiveGlbs: {
     nftUri: 'ethereum://0xb932a70a57673d89f4acffbe830e8ed7f75fb9e0/15149',
     transform: new Transform({
       position: new Vector3(0, -1, 0),
-      scale: new Vector3(0.0018, 0.0018, 0.0018),
+      scale: new Vector3(0.0015, 0.0015, 0.0015),
       rotation: Quaternion.Euler(0, 180, 0)
     })
   },
