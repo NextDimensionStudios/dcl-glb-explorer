@@ -2,19 +2,16 @@ import { GlbSpin, GlbRotator, SpinDirection } from './glb-system';
 import { interactiveGlbs } from './glb-constants';
 import { Sound } from 'src/glb-explorer/sound';
 
-export class Glb {
-  public uri: string;
-  public transform: Transform;
-  constructor(uri: string, transform: Transform) {
-    this.uri = uri;
-    this.transform = transform;
-  }
-}
+const BASE_GLB = 'models/Base.glb';
+const CONTROLS_GLB = 'models/GlbExplorerButtons.glb';
+const ROTATION_SFX = 'sounds/GlbRotateFX.wav';
+const PREVIOUS_SFX = 'sounds/GlbNext.wav';
+const NEXT_SFX = 'sounds/GlbPrevious.wav';
 
 export class GlbExplorer extends Entity {
   currentGlbId: number;
-  currentTitle: Entity;
   currentGlb: Entity;
+  currentTitle: Entity;
   rotator: Entity;
   rotationSfx: Sound;
   nextSfx: Sound;
@@ -23,8 +20,8 @@ export class GlbExplorer extends Entity {
   constructor(transform: Transform) {
     super();
 
-    let base = new Entity();
-    base.addComponent(new GLTFShape('models/Base.glb'));
+    const base = new Entity();
+    base.addComponent(new GLTFShape(BASE_GLB));
     base.addComponent(transform);
     engine.addEntity(base);
 
@@ -54,7 +51,7 @@ export class GlbExplorer extends Entity {
     this.currentGlb.setParent(this.rotator);
 
     const controls = new Entity();
-    controls.addComponent(new GLTFShape('models/GlbExplorerButtons.glb'));
+    controls.addComponent(new GLTFShape(CONTROLS_GLB));
     controls.addComponent(
       new Transform({
         position: transform.position.add(new Vector3(0, 1.5, -6)),
@@ -79,17 +76,17 @@ export class GlbExplorer extends Entity {
     );
     engine.addEntity(this.currentTitle);
 
-    this.rotationSfx = new Sound(new AudioClip('sounds/GlbRotateFX.wav'));
+    this.rotationSfx = new Sound(new AudioClip(ROTATION_SFX));
     this.rotationSfx.getComponent(AudioSource).loop = true;
     this.rotationSfx.getComponent(AudioSource).playing = false;
     this.rotationSfx.getComponent(AudioSource).volume = 1.0;
 
-    this.nextSfx = new Sound(new AudioClip('sounds/GlbNext.wav'));
+    this.nextSfx = new Sound(new AudioClip(NEXT_SFX));
     this.nextSfx.getComponent(AudioSource).loop = false;
     this.nextSfx.getComponent(AudioSource).playing = false;
     this.nextSfx.getComponent(AudioSource).volume = 0.5;
 
-    this.previousSfx = new Sound(new AudioClip('sounds/GlbPrevious.wav'));
+    this.previousSfx = new Sound(new AudioClip(PREVIOUS_SFX));
     this.previousSfx.getComponent(AudioSource).loop = false;
     this.previousSfx.getComponent(AudioSource).playing = false;
     this.previousSfx.getComponent(AudioSource).volume = 0.5;
@@ -98,46 +95,35 @@ export class GlbExplorer extends Entity {
   fire(event: any): void {
     let interactiveGlbs = engine.getComponentGroup(GlbRotator);
     for (let entity of interactiveGlbs.entities) {
-      log(event.hit.meshName);
       switch (event.hit.meshName) {
         case 'UpButton_collider': {
           entity.addComponentOrReplace(new GlbSpin(-6, SpinDirection.y));
           this.rotationSfx.getComponent(AudioSource).playing = true;
-
-          log('Up');
           break;
         }
         case 'DownButton_collider': {
           entity.addComponentOrReplace(new GlbSpin(6, SpinDirection.y));
           this.rotationSfx.getComponent(AudioSource).playing = true;
-
-          log('Down');
           break;
         }
         case 'LeftButton_collider': {
           entity.addComponentOrReplace(new GlbSpin(-6, SpinDirection.x));
           this.rotationSfx.getComponent(AudioSource).playing = true;
-
-          log('Left');
           break;
         }
         case 'RightButton_collider': {
           entity.addComponentOrReplace(new GlbSpin(6, SpinDirection.x));
           this.rotationSfx.getComponent(AudioSource).playing = true;
-
-          log('Right');
           break;
         }
         case 'Previous_collider': {
           this.previousSfx.getComponent(AudioSource).playOnce();
           this.loadPreviousGlb();
-          log('Previous');
           break;
         }
         case 'Next_collider': {
           this.nextSfx.getComponent(AudioSource).playOnce();
           this.loadNextGlb();
-          log('Next');
           break;
         }
       }
@@ -156,7 +142,6 @@ export class GlbExplorer extends Entity {
     this.currentGlb.addComponentOrReplace(
       new OnPointerDown(
         (e) => {
-          log(interactiveGlbs[this.currentGlbId].nftUri);
           openNFTDialog(interactiveGlbs[this.currentGlbId].nftUri);
         },
         {
@@ -184,7 +169,6 @@ export class GlbExplorer extends Entity {
     this.currentGlb.addComponentOrReplace(
       new OnPointerDown(
         (e) => {
-          log(interactiveGlbs[this.currentGlbId].nftUri);
           openNFTDialog(interactiveGlbs[this.currentGlbId].nftUri);
         },
         {
