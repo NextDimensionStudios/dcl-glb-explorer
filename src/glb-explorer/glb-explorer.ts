@@ -69,7 +69,7 @@ export class GlbExplorer extends Entity {
     this.currentTitle.addComponent(initialTitle);
     this.currentTitle.addComponent(
       new Transform({
-        position: transform.position.add(new Vector3(0, 1, -6)),
+        position: transform.position.add(new Vector3(0, 0.75, -6)),
         scale: new Vector3(1, 1, 1),
         rotation: Quaternion.Euler(45, 0, 0)
       })
