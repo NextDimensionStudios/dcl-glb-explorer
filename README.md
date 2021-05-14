@@ -7,6 +7,7 @@ A scene with an interactive 3D NFT explorer in Decentraland.
 This scene shows you:
 
 - How to switch 3D models via an interactive interface
+- Use OpenNFTDialog to reference / update NFT metadata
 - How to handle changes through a system
 - How to create custom components
 
