@@ -17,16 +17,26 @@ This scene shows you:
 
 Download and install the Decentraland CLI by running the following command:
 
-```bash
+```
 npm i -g decentraland
+```
+
+**Install Git LFS**
+
+Download and install the commmand line extension - https://git-lfs.github.com/
+
+Setup Git LFS
+
+```
+git lfs install
 ```
 
 **Previewing the scene**
 
-Download this example and navigate to its directory, then run:
+Download this example and navigate to its directory, initialize Git LFS, then run:
 
 ```
-$:  dcl start
+dcl start
 ```
 
 Any dependencies are installed and then the CLI opens the scene in a new browser tab.
